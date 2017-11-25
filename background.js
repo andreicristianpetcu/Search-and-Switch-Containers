@@ -1,120 +1,34 @@
-const BASE_URL = "https://searchfox.org/mozilla-central";
-const SEARCH_URL = `${BASE_URL}/search`;
-const SOURCE_URL = `${BASE_URL}/source`;
-
-// Provide help text to the user.
 browser.omnibox.setDefaultSuggestion({
-  description: `Search the firefox codebase
-    (e.g. "hello world" | "path:omnibox.js onInputChanged")`
+  description: `Search for containers and switch to them (e.g. "co personal" or "co bancking")`
 });
 
 // Update the suggestions whenever the input is changed.
-browser.omnibox.onInputChanged.addListener((text, addSuggestions) => {
-
-  function onGot(contexts) {
-    for (let context of contexts) {
-      if (context.name.toLowerCase().indexOf(text.toLowerCase()) > -1) {
-        addSuggestions({
-          content: context.name,
-          description: `Switch to container: ${context.name}`
-        });
-        console.log(`Name: ${context.name}`);
-      }
+browser.omnibox.onInputChanged.addListener(async (text, addSuggestions) => {
+  const contexts = await browser.contextualIdentities.query({});
+  for (let context of contexts) {
+    if (context.name.toLowerCase().indexOf(text.toLowerCase()) > -1) {
+      addSuggestions({
+        content: context.name,
+        description: `Switch to container: ${context.name}`
+      });
     }
   }
-
-  function onError(e) {
-    console.error(e);
-  }
-
-  browser.contextualIdentities.query({}).then(onGot, onError);
-
-  // let headers = new Headers({"Accept": "application/json"});
-  // let init = {method: 'GET', headers};
-  // let url = buildSearchURL(text);
-  // let request = new Request(url, init);
-
-  // fetch(request)
-  //   .then(createSuggestionsFromResponse)
-  //   .then(addSuggestions);
 });
 
 // Open the page based on how the user clicks on a suggestion.
-browser.omnibox.onInputEntered.addListener((text, disposition) => {
-  let url = text;
-  if (!text.startsWith(SOURCE_URL)) {
-    // Update the url if the user clicks on the default suggestion.
-    url = `${SEARCH_URL}?q=${text}`;
-  }
-  switch (disposition) {
-    case "currentTab":
-      browser.tabs.update({ url });
+browser.omnibox.onInputEntered.addListener(async (text, disposition) => {
+  const contexts = await browser.contextualIdentities.query({});
+  const tabs = await browser.tabs.query({ currentWindow: true, active: true });
+  for (let context of contexts) {
+    if (context.name.toLowerCase().indexOf(text.toLowerCase()) > -1) {
+      browser.tabs.create(
+        {
+          url: tabs[0].url,
+          cookieStoreId: context.cookieStoreId
+        }
+      )
+      browser.tabs.remove({ id: tabs[0].id });
       break;
-    case "newForegroundTab":
-      browser.tabs.create({ url });
-      break;
-    case "newBackgroundTab":
-      browser.tabs.create({ url, active: false });
-      break;
+    }
   }
 });
-
-function buildSearchURL(text) {
-  let path = '';
-  let queryParts = [];
-  let query = '';
-  let parts = text.split(' ');
-
-  parts.forEach(part => {
-    if (part.startsWith("path:")) {
-      path = part.slice(5);
-    } else {
-      queryParts.push(part);
-    }
-  });
-
-  query = queryParts.join(' ');
-  return `${SEARCH_URL}?q=${query}&path=${path}`;
-}
-
-function createSuggestionsFromResponse(response) {
-  return new Promise(resolve => {
-    let suggestions = [];
-    let suggestionsOnEmptyResults = [{
-      content: SOURCE_URL,
-      description: "no results found"
-    }];
-    response.json().then(json => {
-      if (!json.normal) {
-        return resolve(suggestionsOnEmptyResults);
-      }
-
-      let occurrences = json.normal["Textual Occurrences"];
-      let files = json.normal["Files"];
-
-      if (!occurrences && !files) {
-        return resolve(suggestionsOnEmptyResults);
-      }
-
-      if (occurrences) {
-        occurrences.forEach(({ path, lines }) => {
-          suggestions.push({
-            content: `${SOURCE_URL}/${path}#${lines[0].lno}`,
-            description: lines[0].line,
-          });
-        });
-        return resolve(suggestions);
-      }
-
-      // There won't be any textual occurrences if the "path:" prefix is used.
-      files.forEach(({ path }) => {
-        suggestions.push({
-          content: `${SOURCE_URL}/${path}`,
-          description: path,
-        });
-      });
-      return resolve(suggestions);
-    });
-  });
-}
-
