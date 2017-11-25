@@ -1,6 +1,6 @@
 {
-  "name": "Firefox Code Search",
-  "description" : "To use, type 'cs' plus a search term into the url bar.",
+  "name": "Search and Switch Containers",
+  "description" : "To use, type 'co' part of the name of the container you want to swithc to into the url bar. This addon will switch the current container to that one.",
   "version": "1.0",
   "applications": {
     "gecko": {
@@ -16,7 +16,6 @@
     "tabs",
     "activeTab",
     "cookies",
-    "contextualIdentities",
-    "https://searchfox.org/"
+    "contextualIdentities"
   ]
 }
