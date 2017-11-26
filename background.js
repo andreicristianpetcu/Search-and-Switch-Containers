@@ -1,5 +1,5 @@
 browser.omnibox.setDefaultSuggestion({
-  description: `Search for containers and switch to them (e.g. "co personal" or "co bancking")`
+  description: `Search for containers and switch to them (e.g. "co personal" or "co banking")`
 });
 
 browser.omnibox.onInputChanged.addListener(async (text, addSuggestions) => {
