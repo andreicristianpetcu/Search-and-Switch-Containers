@@ -1,6 +1,6 @@
 {
   "name": "Search and Switch Containers",
-  "description": "To use, type 'co' part of the name of the container you want to swithc to into the url bar. This addon will switch the current container to that one.",
+  "description": "To use, type 'co' part of the name of the container you want to switch to into the url bar. This addon will switch the current container to that one.",
   "version": "1.2",
   "applications": {
     "gecko": {
