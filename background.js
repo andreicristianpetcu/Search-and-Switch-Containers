@@ -28,15 +28,16 @@ browser.omnibox.onInputEntered.addListener(async (text, disposition) => {
   })
   for (let context of contexts) {
     if (context.name.toLowerCase().indexOf(text.toLowerCase()) > -1) {
-      browser.tabs.remove(tabs[0].id);
-      browser.tabs.create(
-        {
-          url: tabs[0].url,
-          cookieStoreId: context.cookieStoreId,
-          index: tabs[0].index
-        }
-      )
-      break;
+      let tabCreateProperties = {
+        cookieStoreId: context.cookieStoreId,
+        index: tabs[0].index
+      }
+      if(tabs[0].url != 'about:newtab'){
+        tabCreateProperties.url = tabs[0].url;
+      }
+      browser.tabs.create(tabCreateProperties)
+      browser.tabs.remove(tabs[0].id)
+      break
     }
   }
 });
