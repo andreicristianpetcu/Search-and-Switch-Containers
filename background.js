@@ -4,7 +4,10 @@ browser.omnibox.setDefaultSuggestion({
 
 browser.omnibox.onInputChanged.addListener(async (text, addSuggestions) => {
   const contexts = await browser.contextualIdentities.query({});
-  var result = [];
+  var result = [{
+    content: "default",
+    description: `Switch to container: default`
+  }];
   for (let context of contexts) {
     if (context.name.toLowerCase().indexOf(text.toLowerCase()) > -1) {
       result.push({
@@ -19,6 +22,10 @@ browser.omnibox.onInputChanged.addListener(async (text, addSuggestions) => {
 browser.omnibox.onInputEntered.addListener(async (text, disposition) => {
   const contexts = await browser.contextualIdentities.query({});
   const tabs = await browser.tabs.query({ currentWindow: true, active: true });
+  contexts.push({
+    cookieStoreId: 'firefox-default',
+    name: 'default'
+  })
   for (let context of contexts) {
     if (context.name.toLowerCase().indexOf(text.toLowerCase()) > -1) {
       browser.tabs.remove(tabs[0].id);
