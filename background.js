@@ -4,10 +4,11 @@ browser.omnibox.setDefaultSuggestion({
 
 browser.omnibox.onInputChanged.addListener(async (text, addSuggestions) => {
   const contexts = await browser.contextualIdentities.query({});
-  var result = [{
-    content: "default",
+  const result = [];
+  contexts.push({
+    name: "default",
     description: `Switch to container: default`
-  }];
+  });
   for (let context of contexts) {
     if (context.name.toLowerCase().indexOf(text.toLowerCase()) > -1) {
       result.push({
