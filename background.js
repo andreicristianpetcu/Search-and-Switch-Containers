@@ -34,7 +34,7 @@ browser.omnibox.onInputEntered.addListener(async (text, disposition) => {
         cookieStoreId: context.cookieStoreId,
         index: tabs[0].index
       };
-      if(tabs[0].url !== 'about:newtab') {
+      if(tabs[0].url !== 'about:newtab' && tabs[0].url !== 'about:blank') {
         tabCreateProperties.url = tabs[0].url;
       }
       browser.tabs.create(tabCreateProperties);
