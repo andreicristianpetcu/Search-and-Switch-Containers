@@ -1,2 +1,4 @@
 # IntelliJ IDEA
 .idea/
+node_modules
+coverage
