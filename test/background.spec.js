@@ -3,7 +3,7 @@
 
     describe('Test', function () {
         it('should have hello', function () {
-            expect('world').toBe('world');
+            expect(browser.bookmarks).toBeDefined();
         });
     });
 })();
