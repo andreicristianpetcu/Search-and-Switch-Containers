@@ -1,18 +1,16 @@
 module.exports = function (config) {
   config.set({
     files: [
+      // 'node_modules/webextension-polyfill/dist/browser-polyfill.js',
       'background.js',
       'test/**/*.js'
     ],
     browsers: ['Firefox'],
-      // coverage reporter generates the coverage
-    reporters: ['progress', 'coverage', 'spec'],
+    // coverage reporter generates the coverage
+    reporters: ['progress', 'coverage'],
     frameworks: ['jasmine', 'sinon', 'sinon-chrome'],
     preprocessors: {
-        // source files, that you wanna generate coverage for
-        // do not include tests or libraries
-        // (these files will be instrumented by Istanbul)
-        '**/*.js': ['coverage']
+      'test/**/*.js': ['webpack']
     },
     babelPreprocessor: {
       options: {

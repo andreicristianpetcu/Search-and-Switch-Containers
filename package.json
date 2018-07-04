@@ -13,9 +13,11 @@
     "karma-sinon": "^1.0.5",
     "karma-sinon-chrome": "^0.2.0",
     "karma-spec-reporter": "0.0.32",
+    "karma-webpack": "^3.0.0",
     "sinon": "^6.1.0",
     "sinon-chrome": "^2.3.2",
-    "webextension-polyfill": "^0.2.1"
+    "webextension-polyfill": "^0.2.1",
+    "webpack-karma-jasmine": "^1.0.4"
   },
   "scripts": {
     "test": "./node_modules/karma/bin/karma start karma.conf.js"
