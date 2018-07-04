@@ -5,8 +5,10 @@
   "main": "background.js",
   "dependencies": {},
   "devDependencies": {
+    "chai": "^4.1.2",
     "jasmine": "^3.1.0",
     "karma": "^2.0.4",
+    "karma-chai": "^0.1.0",
     "karma-coverage": "^1.1.2",
     "karma-firefox-launcher": "^1.1.0",
     "karma-jasmine": "^1.1.2",

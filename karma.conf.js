@@ -1,16 +1,16 @@
 module.exports = function (config) {
   config.set({
     files: [
-      'test_initializer.js',
+      'test/test_initializer.js',
       'background.js',
-      'test/**/*.js'
+      'test/**/*.spec.js'
     ],
     browsers: ['Firefox'],
     reporters: ['progress', 'coverage'],
-    frameworks: ['jasmine', 'sinon', 'sinon-chrome'],
+    frameworks: ['jasmine', 'sinon', 'sinon-chrome', 'chai'],
     preprocessors: {
-      'test_initializer.js': ['webpack'],
-      'test/**/*.js': ['webpack']
+      'test/test_initializer.js': ['webpack'],
+      'test/**/*.spec.js': ['webpack']
     },
     babelPreprocessor: {
       options: {
