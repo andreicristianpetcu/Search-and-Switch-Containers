@@ -1,6 +1,6 @@
 {
   "name": "search-and-switch-containers",
-  "version": "1.7.0",
+  "version": "2.0.0",
   "description": "Firefox WebExtension to Search and Switch Containers",
   "main": "background.js",
   "devDependencies": {
