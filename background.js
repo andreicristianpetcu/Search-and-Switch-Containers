@@ -17,7 +17,8 @@ function getContainerIconEmoji(iconName) {
     pet: '🐕',
     tree: '🌳',
     chill: '😎',
-    fence: '🚧'
+    fence: '🚧',
+    heart: '❤️'
   };
   return iconMap[iconName] || '📁';
 }
@@ -31,7 +32,7 @@ function getColorIndicator(colorName) {
     yellow: '🟡',
     orange: '🟠',
     red: '🔴',
-    pink: '🩷',
+    pink: '⚪️',
     purple: '🟣',
     toolbar: '⚫'
   };
@@ -40,7 +41,6 @@ function getColorIndicator(colorName) {
 
 browser.omnibox.onInputChanged.addListener(async (text, addSuggestions) => {
   const contexts = await browser.contextualIdentities.query({});
-  const result = [];
   
   // Add default container
   contexts.push({
@@ -49,17 +49,32 @@ browser.omnibox.onInputChanged.addListener(async (text, addSuggestions) => {
     icon: 'circle',
   });
   
-  for (const context of contexts) {
-    if (context.name.toLowerCase().indexOf(text.toLowerCase()) > -1) {
-      const iconEmoji = getContainerIconEmoji(context.icon);
-      const colorEmoji = getColorIndicator(context.color);
-      
-      result.push({
-        content: context.name,
-        description: `${iconEmoji} ${colorEmoji} Switch to container: ${context.name}`,
-      });
-    }
-  }
+  const searchText = text.toLowerCase();
+  
+  // Find exact matches first
+  const exactMatches = contexts.filter(context => 
+    context.name.toLowerCase() === searchText
+  );
+  
+  // Find partial matches (excluding exact matches)
+  const partialMatches = contexts.filter(context => 
+    context.name.toLowerCase().includes(searchText) && 
+    context.name.toLowerCase() !== searchText
+  );
+  
+  // Combine: exact matches first, then partial matches, limit to 5 total
+  const allMatches = [...exactMatches, ...partialMatches].slice(0, 5);
+  
+  const result = allMatches.map(context => {
+    const iconEmoji = getContainerIconEmoji(context.icon);
+    const colorEmoji = getColorIndicator(context.color);
+    
+    return {
+      content: context.name,
+      description: `${iconEmoji} ${colorEmoji} Switch to container: ${context.name}`,
+    };
+  });
+  
   addSuggestions(result);
 });
 
