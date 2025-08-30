@@ -17,14 +17,7 @@ module.exports = {
 
   // Run options (for development)
   run: {
-    firefox: 'firefox', // or specific path like '/usr/bin/firefox'
     startUrl: ['about:debugging#/runtime/this-firefox'],
-    pref: {
-      // Enable container tabs
-      'privacy.userContext.enabled': true,
-      // Disable signing requirement for development
-      'xpinstall.signatures.required': false,
-    },
   },
 
   // Lint options
