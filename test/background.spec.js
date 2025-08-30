@@ -5,7 +5,7 @@
     it('should have a good default suggestion', function () {
       assert.ok(
         browser.omnibox.setDefaultSuggestion.withArgs({
-          description: `Search for containers and switch to them (e.g. "co personal" or "co banking")`,
+          description: `Search for containers and switch to them (e.g. "co personal", "co banking", or "co default" for no container)`,
         }).calledOnce,
         'setDefaultSuggestion should be called with specified args'
       );
@@ -18,6 +18,7 @@
     const addSuggestions = sinon.spy();
 
     it('should have a good default suggestion', async function () {
+      addSuggestions.resetHistory();
       browser.contextualIdentities.query = sinon.fake.returns(
         Promise.resolve([])
       );
@@ -36,6 +37,7 @@
     });
 
     it('should match the needed containers', async function () {
+      addSuggestions.resetHistory();
       browser.contextualIdentities.query = sinon.fake.returns(
         Promise.resolve([
           {
@@ -61,6 +63,31 @@
           },
         ]).calledOnce,
         'addSuggestions should include the matching container name'
+      );
+    });
+
+    it('should suggest default container for no container browsing', async function () {
+      addSuggestions.resetHistory();
+      browser.contextualIdentities.query = sinon.fake.returns(
+        Promise.resolve([
+          {
+            name: 'Personal',
+            color: 'blue',
+            icon: 'fingerprint',
+          },
+        ])
+      );
+
+      await onInputChangedListener('default', addSuggestions);
+
+      assert.ok(
+        addSuggestions.withArgs([
+          {
+            content: 'default',
+            description: '🔵 ⚫ Switch to container: default',
+          },
+        ]).calledOnce,
+        'addSuggestions should include the default container for no-container browsing'
       );
     });
   });

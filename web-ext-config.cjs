@@ -18,6 +18,7 @@ module.exports = {
   // Run options (for development)
   run: {
     startUrl: ['about:debugging#/runtime/this-firefox'],
+    keepProfileChanges: false,
   },
 
   // Lint options
