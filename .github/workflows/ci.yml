@@ -58,13 +58,13 @@ jobs:
       run: npm run build:chrome
 
     - name: Upload Firefox build
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: firefox-extension
         path: dist/firefox
 
     - name: Upload Chrome build
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: chrome-extension
         path: dist/chrome
