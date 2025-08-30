@@ -1,7 +1,7 @@
 module.exports = function (config) {
   config.set({
     files: ['test/test_initializer.js', 'background.js', 'test/**/*.spec.js'],
-    browsers: ['Firefox'],
+    browsers: ['FirefoxHeadless'],
     reporters: ['progress', 'coverage'],
     frameworks: ['jasmine', 'sinon', 'sinon-chrome', 'chai'],
     preprocessors: {
@@ -24,6 +24,15 @@ module.exports = function (config) {
     coverageReporter: {
       type: 'html',
       dir: 'coverage/',
+    },
+    // Run tests once and exit (not continuous)
+    singleRun: true,
+    // Configure Firefox for headless mode
+    customLaunchers: {
+      FirefoxHeadless: {
+        base: 'Firefox',
+        flags: ['-headless'],
+      },
     },
   });
 };
