@@ -9,7 +9,7 @@ browser.omnibox.onInputChanged.addListener(async (text, addSuggestions) => {
     name: 'default',
     description: `Switch to container: default`,
   });
-  for (let context of contexts) {
+  for (const context of contexts) {
     if (context.name.toLowerCase().indexOf(text.toLowerCase()) > -1) {
       result.push({
         content: context.name,
@@ -20,7 +20,7 @@ browser.omnibox.onInputChanged.addListener(async (text, addSuggestions) => {
   addSuggestions(result);
 });
 
-browser.omnibox.onInputEntered.addListener(async (text, disposition) => {
+browser.omnibox.onInputEntered.addListener(async (text) => {
   const contexts = await browser.contextualIdentities.query({});
   const tabs = await browser.tabs.query({ currentWindow: true, active: true });
   contexts.push({
@@ -28,9 +28,9 @@ browser.omnibox.onInputEntered.addListener(async (text, disposition) => {
     name: 'default',
   });
 
-  for (let context of contexts) {
+  for (const context of contexts) {
     if (context.name.toLowerCase().indexOf(text.toLowerCase()) > -1) {
-      let tabCreateProperties = {
+      const tabCreateProperties = {
         cookieStoreId: context.cookieStoreId,
         index: tabs[0].index,
       };
