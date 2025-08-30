@@ -18,8 +18,7 @@
     "128": "icon-128.png"
   },
   "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+    "scripts": ["background.js"]
   },
   "omnibox": {
     "keyword": "co"
