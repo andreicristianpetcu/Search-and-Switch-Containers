@@ -6,7 +6,7 @@ browser.omnibox.setDefaultSuggestion({
 function getContainerIconEmoji(iconName) {
   const iconMap = {
     fingerprint: '🔒',
-    briefcase: '💼', 
+    briefcase: '💼',
     dollar: '💰',
     cart: '🛒',
     circle: '🔵',
@@ -18,7 +18,7 @@ function getContainerIconEmoji(iconName) {
     tree: '🌳',
     chill: '😎',
     fence: '🚧',
-    heart: '❤️'
+    heart: '❤️',
   };
   return iconMap[iconName] || '📁';
 }
@@ -27,54 +27,55 @@ function getContainerIconEmoji(iconName) {
 function getColorIndicator(colorName) {
   const colorMap = {
     blue: '🔵',
-    turquoise: '🔵', 
+    turquoise: '🔵',
     green: '🟢',
     yellow: '🟡',
     orange: '🟠',
     red: '🔴',
     pink: '⚪️',
     purple: '🟣',
-    toolbar: '⚫'
+    toolbar: '⚫',
   };
   return colorMap[colorName] || '⚪';
 }
 
 browser.omnibox.onInputChanged.addListener(async (text, addSuggestions) => {
   const contexts = await browser.contextualIdentities.query({});
-  
+
   // Add default container
   contexts.push({
     name: 'default',
     color: 'toolbar',
     icon: 'circle',
   });
-  
+
   const searchText = text.toLowerCase();
-  
+
   // Find exact matches first
-  const exactMatches = contexts.filter(context => 
-    context.name.toLowerCase() === searchText
+  const exactMatches = contexts.filter(
+    (context) => context.name.toLowerCase() === searchText
   );
-  
+
   // Find partial matches (excluding exact matches)
-  const partialMatches = contexts.filter(context => 
-    context.name.toLowerCase().includes(searchText) && 
-    context.name.toLowerCase() !== searchText
+  const partialMatches = contexts.filter(
+    (context) =>
+      context.name.toLowerCase().includes(searchText) &&
+      context.name.toLowerCase() !== searchText
   );
-  
+
   // Combine: exact matches first, then partial matches, limit to 5 total
   const allMatches = [...exactMatches, ...partialMatches].slice(0, 5);
-  
-  const result = allMatches.map(context => {
+
+  const result = allMatches.map((context) => {
     const iconEmoji = getContainerIconEmoji(context.icon);
     const colorEmoji = getColorIndicator(context.color);
-    
+
     return {
       content: context.name,
       description: `${iconEmoji} ${colorEmoji} Switch to container: ${context.name}`,
     };
   });
-  
+
   addSuggestions(result);
 });
 

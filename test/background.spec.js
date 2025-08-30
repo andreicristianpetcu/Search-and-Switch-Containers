@@ -28,7 +28,7 @@
         addSuggestions.withArgs([
           {
             content: 'default',
-            description: 'Switch to container: default',
+            description: '🔵 ⚫ Switch to container: default',
           },
         ]).calledOnce,
         'addSuggestions should include the default container'
@@ -40,9 +40,13 @@
         Promise.resolve([
           {
             name: 'Fun',
+            color: 'blue',
+            icon: 'gift',
           },
           {
             name: 'Boring work',
+            color: 'red',
+            icon: 'briefcase',
           },
         ])
       );
@@ -53,7 +57,7 @@
         addSuggestions.withArgs([
           {
             content: 'Fun',
-            description: 'Switch to container: Fun',
+            description: '🎁 🔵 Switch to container: Fun',
           },
         ]).calledOnce,
         'addSuggestions should include the matching container name'
