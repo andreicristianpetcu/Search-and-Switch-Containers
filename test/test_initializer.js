@@ -11,4 +11,4 @@ browser.omnibox.setDefaultSuggestion = sinon.spy();
 browser.omnibox.onInputChanged.addListener = sinon.spy();
 browser.contextualIdentities = {};
 
-console.log("initializing tests");
+// Initializing tests
