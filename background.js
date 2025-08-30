@@ -1,5 +1,5 @@
 browser.omnibox.setDefaultSuggestion({
-  description: `Search for containers and switch to them (e.g. "co personal" or "co banking")`,
+  description: `Search for containers and switch to them (e.g. "co personal", "co banking", or "co default" for no container)`,
 });
 
 // Helper function to get icon emoji for container icons

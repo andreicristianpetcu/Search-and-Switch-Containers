@@ -4,6 +4,7 @@
   "version": "2.0.0",
   "browser_specific_settings": {
     "gecko": {
+      "id": "search-and-switch-containers@andrei.petcu.net",
       "strict_min_version": "109.0"
     }
   },
@@ -17,7 +18,8 @@
     "128": "icon-128.png"
   },
   "background": {
-    "service_worker": "background.js"
+    "scripts": ["background.js"],
+    "persistent": false
   },
   "omnibox": {
     "keyword": "co"
