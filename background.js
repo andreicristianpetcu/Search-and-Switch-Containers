@@ -2,18 +2,61 @@ browser.omnibox.setDefaultSuggestion({
   description: `Search for containers and switch to them (e.g. "co personal" or "co banking")`,
 });
 
+// Helper function to get icon emoji for container icons
+function getContainerIconEmoji(iconName) {
+  const iconMap = {
+    fingerprint: '🔒',
+    briefcase: '💼', 
+    dollar: '💰',
+    cart: '🛒',
+    circle: '🔵',
+    gift: '🎁',
+    vacation: '🏖️',
+    food: '🍕',
+    fruit: '🍎',
+    pet: '🐕',
+    tree: '🌳',
+    chill: '😎',
+    fence: '🚧'
+  };
+  return iconMap[iconName] || '📁';
+}
+
+// Helper function to get color indicator
+function getColorIndicator(colorName) {
+  const colorMap = {
+    blue: '🔵',
+    turquoise: '🔵', 
+    green: '🟢',
+    yellow: '🟡',
+    orange: '🟠',
+    red: '🔴',
+    pink: '🩷',
+    purple: '🟣',
+    toolbar: '⚫'
+  };
+  return colorMap[colorName] || '⚪';
+}
+
 browser.omnibox.onInputChanged.addListener(async (text, addSuggestions) => {
   const contexts = await browser.contextualIdentities.query({});
   const result = [];
+  
+  // Add default container
   contexts.push({
     name: 'default',
-    description: `Switch to container: default`,
+    color: 'toolbar',
+    icon: 'circle',
   });
+  
   for (const context of contexts) {
     if (context.name.toLowerCase().indexOf(text.toLowerCase()) > -1) {
+      const iconEmoji = getContainerIconEmoji(context.icon);
+      const colorEmoji = getColorIndicator(context.color);
+      
       result.push({
         content: context.name,
-        description: `Switch to container: ${context.name}`,
+        description: `${iconEmoji} ${colorEmoji} Switch to container: ${context.name}`,
       });
     }
   }
