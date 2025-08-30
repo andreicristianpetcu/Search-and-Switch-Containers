@@ -31,12 +31,16 @@
     "build": "web-ext build",
     "build:firefox": "web-ext build",
     "build:chrome": "web-ext build",
+    "sign": "web-ext sign",
+    "submit": "web-ext sign --amo-upload",
+    "lint:web-ext": "web-ext lint",
     "lint": "eslint *.js test/*.js",
     "lint:fix": "eslint *.js test/*.js --fix",
     "format": "prettier --write *.js test/*.js *.json *.md",
     "format:check": "prettier --check *.js test/*.js *.json *.md",
     "test": "npm run lint && npm run format:check && ./node_modules/karma/bin/karma start karma.conf.js",
-    "prepack": "npm run build"
+    "prepack": "npm run build",
+    "release": "npm run test && npm run build && npm run sign"
   },
   "repository": {
     "type": "git",
