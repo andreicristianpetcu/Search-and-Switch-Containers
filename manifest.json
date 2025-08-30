@@ -4,7 +4,7 @@
   "version": "1.7.0",
   "browser_specific_settings": {
     "gecko": {
-      "strict_min_version": "52.0a1"
+      "strict_min_version": "109.0"
     }
   },
   "homepage_url": "https://github.com/andreicristianpetcu/Search-and-Switch-Containers",
@@ -17,11 +17,11 @@
     "128": "icon-128.png"
   },
   "background": {
-    "scripts": ["background.js"]
+    "service_worker": "background.js"
   },
   "omnibox": {
     "keyword": "co"
   },
-  "manifest_version": 2,
+  "manifest_version": 3,
   "permissions": ["tabs", "activeTab", "cookies", "contextualIdentities"]
 }
