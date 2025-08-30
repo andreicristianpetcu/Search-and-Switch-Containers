@@ -1,0 +1,34 @@
+# Test coverage files
+coverage/
+
+# Test files
+test/
+
+# Node modules
+node_modules/
+
+# Development configuration files
+*.conf.js
+karma.conf.js
+package.json
+package-lock.json
+web-ext-config.cjs
+
+# Version control
+.git/
+.gitignore
+.webextignore
+
+# IDE files
+.idea/
+
+# Build artifacts that shouldn't be in the extension
+web-ext-artifacts/
+.amo-upload-uuid
+
+# Documentation
+README.md
+LICENSE.txt
+
+# CI/CD files
+.github/
