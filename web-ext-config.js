@@ -1,12 +1,12 @@
 module.exports = {
   // Global options
   verbose: true,
-  
+
   // Build options
   build: {
     overwriteDest: true,
   },
-  
+
   // Sign options (for AMO submission)
   sign: {
     // These should be set via environment variables:
@@ -14,7 +14,7 @@ module.exports = {
     // Get them from: https://addons.mozilla.org/developers/addon/api/key/
     channel: 'listed', // 'listed' for public AMO, 'unlisted' for self-distribution
   },
-  
+
   // Run options (for development)
   run: {
     firefox: 'firefox', // or specific path like '/usr/bin/firefox'
@@ -26,7 +26,7 @@ module.exports = {
       'xpinstall.signatures.required': false,
     },
   },
-  
+
   // Lint options
   lint: {
     pretty: true,
